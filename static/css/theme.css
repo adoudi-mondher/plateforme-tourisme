@@ -1,0 +1,115 @@
+/* --- Google Font Import --- */
+@import url('https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700&family=Lato:wght@400;700&family=Cairo:wght@400;700&display=swap');
+
+/* --- CSS Variables for our Color Palette --- */
+:root {
+    --primary-green: #004d40;
+    --accent-terracotta: #c86e58;
+    --background-sand: #f4f1ea;
+    --text-charcoal: #333333;
+    --card-white: #FFFFFF;
+    --shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+/* --- Global Styles --- */
+body {
+    font-family: 'Lato', 'Cairo', sans-serif; /* Cairo for Arabic, Lato as fallback */
+    background-color: var(--background-sand);
+    color: var(--text-charcoal);
+    margin: 0;
+    padding: 0;
+    line-height: 1.6;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-family: 'Merriweather', serif;
+    color: var(--primary-green);
+}
+
+a {
+    color: var(--accent-terracotta);
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+a:hover {
+    color: var(--primary-green);
+}
+
+.content {
+    max-width: 960px;
+    margin: 20px auto;
+    padding: 20px;
+}
+
+/* --- Button Styles --- */
+.btn {
+    display: inline-block;
+    background-color: var(--primary-green);
+    color: white;
+    padding: 12px 25px;
+    border-radius: 5px;
+    text-decoration: none;
+    margin-top: 10px;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.btn:hover {
+    background-color: #00382e; /* A darker green */
+    color: white;
+    transform: translateY(-2px);
+}
+
+/* --- Card Styles --- */
+.card, .feature-card, .feedback-item {
+    background-color: var(--card-white);
+    border-radius: 8px;
+    padding: 25px;
+    box-shadow: var(--shadow);
+    margin-bottom: 20px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card:hover, .feature-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 20px rgba(0,0,0,0.12);
+}
+
+/* --- Form Styles --- */
+.feedback-form {
+    background-color: var(--card-white);
+    padding: 30px;
+    border-radius: 8px;
+    margin-top: 40px;
+    box-shadow: var(--shadow);
+}
+
+.form-group label {
+    font-weight: bold;
+    color: var(--primary-green);
+}
+
+input[type="text"],
+input[type="email"],
+textarea {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    box-sizing: border-box;
+    margin-top: 5px;
+    font-family: 'Lato', 'Cairo', sans-serif;
+}
+
+input[type="text"]:focus,
+input[type="email"]:focus,
+textarea:focus {
+    outline: none;
+    border-color: var(--primary-green);
+    box-shadow: 0 0 5px rgba(0, 77, 64, 0.3);
+}

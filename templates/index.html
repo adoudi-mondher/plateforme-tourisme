@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl"> <head>
+    <meta charset="UTF-8">
+    <title>Espace Telmoudi - بوابتك إلى واحة قابس</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/theme.css') }}">
+    <style>
+        /* Styles specific to the homepage */
+        .hero {
+            background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url("{{ url_for('static', filename='images/oasis.jpg') }}");
+            background-size: cover;
+            background-position: center;
+            color: white;
+            text-align: center;
+            padding: 100px 20px;
+        }
+        .hero h1 {
+            color: white;
+            font-size: 3.5rem;
+            margin-bottom: 10px;
+        }
+        .hero p {
+            font-size: 1.2rem;
+            max-width: 600px;
+            margin: 0 auto 30px auto;
+        }
+        .cards-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+        .card h3 { margin-top: 0; }
+        footer {
+            text-align: center;
+            padding: 20px;
+            margin-top: 40px;
+            background-color: #e8e4db;
+            color: var(--text-charcoal);
+        }
+    </style>
+</head>
+<body>
+    {% include 'navbar.html' %}
+
+    <header class="hero">
+        <h1>مرحباً بكم في فضاء التلمودي</h1>
+        <p>تجربة فريدة تمزج بين هدوء الواحة وحيوية الأنشطة العصرية في قلب قابس.</p>
+        <a class="btn" href="#">اكتشف برامجنا</a>
+    </header>
+
+    <div class="content">
+        <main>
+            <section class="cards-container">
+                <div class="card">
+                    <h3>🎬 لقاءات سينمائية</h3>
+                    <p>أمسيات سينمائية في الهواء الطلق تليها حلقات نقاش ثرية حول الأفلام.</p>
+                </div>
+                <div class="card">
+                    <h3>🚀 ورشة القيادة</h3>
+                    <p>طور مهاراتك القيادية والإدارية في ورش عمل تفاعلية وملهمة.</p>
+                </div>
+                 <div class="card">
+                    <h3>🎨 فنون الواحة</h3>
+                    <p>انضم إلينا في ورش عمل فنية مستوحاة من جمال وطبيعة واحة قابس.</p>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <footer>
+        <p>للحجز والاستفسار: 99123456</p>
+    </footer>
+</body>
+</html>

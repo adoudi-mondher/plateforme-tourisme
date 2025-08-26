@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <title>حجز موعد - Espace Telmoudi</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/theme.css') }}">
+    <style>
+        .form-container {
+            max-width: 600px;
+            margin: 40px auto;
+            background-color: var(--card-white);
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: var(--shadow);
+        }
+
+        /* --- NEW: Style for the secondary button --- */
+        .btn-secondary {
+            background-color: var(--accent-terracotta);
+            padding: 8px 18px;
+            font-size: 14px;
+        }
+        .btn-secondary:hover {
+            background-color: #b05c48; /* A darker terracotta */
+        }
+    </style>
+</head>
+<body>
+    {% include 'navbar.html' %}
+
+    <div class="content">
+        <div class="form-container">
+            <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid #e8e4db; padding-bottom: 15px; margin-bottom: 20px;">
+                <h1 style="margin: 0; font-size: 1.8rem;">حجز موعد جديد</h1>
+                <a href="{{ url_for('my_appointments') }}" class="btn btn-secondary">عرض حجوزاتي</a>
+            </div>
+
+            <p style="text-align: center; margin-bottom: 30px;">اختر الخدمة والتاريخ المناسب لك.</p>
+
+            <form method="POST" action="{{ url_for('book_appointment') }}">
+                <div class="form-group">
+                    <label for="service">اختر الخدمة:</label>
+                    <select id="service" name="service" required style="width:100%; padding:12px; border: 1px solid #ddd; border-radius: 5px; font-family: 'Lato', 'Cairo', sans-serif;">
+                        <option value="لقاءات سينمائية">لقاءات سينمائية</option>
+                        <option value="ورشة القيادة">ورشة القيادة</option>
+                        <option value="فنون الواحة">فنون الواحة</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="date">اختر التاريخ:</label>
+                    <input type="date" id="date" name="date" required style="width:100%; padding:12px; border: 1px solid #ddd; border-radius: 5px; font-family: 'Lato', 'Cairo', sans-serif;">
+                </div>
+                <button type="submit" class="btn" style="width: 100%; margin-top: 20px;">تأكيد الحجز</button>
+            </form>
+        </div>
+    </div>
+</body>
+</html>

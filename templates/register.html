@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <title>إنشاء حساب جديد - Espace Telmoudi</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/theme.css') }}">
+    <style>
+        .auth-container {
+            max-width: 500px;
+            margin: 50px auto;
+            background-color: var(--card-white);
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: var(--shadow);
+        }
+    </style>
+</head>
+<body>
+    {% include 'navbar.html' %}
+    <div class="content">
+        <div class="auth-container">
+            <h1 style="text-align: center; margin-top: 0;">إنشاء حساب جديد</h1>
+            <form method="POST" action="{{ url_for('register') }}">
+                <div class="form-group">
+                    <label for="name">الاسم:</label>
+                    <input type="text" id="name" name="name" required>
+                </div>
+                <div class="form-group">
+                    <label for="email">البريد الإلكتروني:</label>
+                    <input type="email" id="email" name="email" required>
+                </div>
+                <div class="form-group">
+                    <label for="password">كلمة المرور:</label>
+                    <input type="password" id="password" name="password" required>
+                </div>
+                <button type="submit" class="btn" style="width:100%; margin-top:20px;">إنشاء حساب</button>
+            </form>
+            <p style="text-align:center; margin-top:20px;">
+                لديك حساب بالفعل؟ <a href="{{ url_for('login') }}">قم بتسجيل الدخول</a>
+            </p>
+        </div>
+    </div>
+</body>
+</html>

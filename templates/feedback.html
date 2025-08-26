@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <title>آراء الزوار - Espace Telmoudi</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/theme.css') }}">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+  <style>
+      /* Main container for the two-column layout */
+      .feedback-container {
+          display: flex;
+          align-items: flex-start;
+          gap: 40px;
+          margin-top: 40px;
+      }
+
+      /* Columns */
+      .form-column {
+          flex: 1;
+          min-width: 350px; /* Slightly wider for better form layout */
+      }
+      .feedback-list-column {
+          flex: 2;
+      }
+
+      /* Enhanced Form Card - This IS the sticky element now */
+      .feedback-form {
+          background-color: var(--card-white);
+          padding: 30px;
+          border-radius: 12px; /* Softer radius */
+          box-shadow: 0 10px 25px rgba(0,0,0,0.1); /* Deeper shadow for prominence */
+          position: sticky;
+          top: 20px;
+      }
+
+      /* Shared style for column titles */
+      .column-title {
+          font-size: 1.8rem;
+          color: var(--primary-green);
+          margin-top: 0;
+          margin-bottom: 25px;
+          padding-bottom: 10px;
+          border-bottom: 2px solid #e8e4db; /* Subtle separator */
+      }
+
+      /* Enhanced Feedback Item Card */
+      .feedback-item {
+          background-color: var(--card-white);
+          border-radius: 12px;
+          padding: 25px;
+          box-shadow: var(--shadow);
+          margin-bottom: 20px;
+          /* Replaced simple border with a subtle left glow on hover */
+          border: 1px solid #e8e4db;
+          transition: transform 0.3s ease, box-shadow 0.3s ease;
+      }
+      .feedback-item:hover {
+          transform: translateY(-5px);
+          box-shadow: 0 8px 20px rgba(0,0,0,0.12);
+      }
+      
+      .feedback-item-header {
+          display: flex;
+          align-items: center;
+          gap: 15px;
+          margin-bottom: 10px;
+      }
+      .feedback-item-header .icon {
+          font-size: 1.8rem;
+          color: var(--accent-terracotta);
+      }
+      .feedback-item h3 { margin: 0; }
+      .feedback-item small {
+          color: #777;
+          display: block;
+          margin-top: 15px;
+          font-size: 0.9em;
+      }
+      .media-preview {
+          max-width: 100%;
+          height: auto;
+          border-radius: 8px;
+          margin-top: 15px;
+      }
+
+      /* Engaging "No Feedback" Card */
+      .no-feedback-card {
+          background-color: var(--card-white);
+          border: 2px dashed var(--primary-green);
+          border-radius: 12px;
+          padding: 50px 30px;
+          text-align: center;
+          opacity: 0.8;
+      }
+      .no-feedback-card .icon {
+          font-size: 3rem;
+          color: var(--primary-green);
+          margin-bottom: 15px;
+      }
+       .no-feedback-card p {
+          font-size: 1.1rem;
+          color: var(--text-charcoal);
+          margin: 0;
+       }
+
+      /* Responsive layout for screens smaller than 992px */
+      @media (max-width: 992px) {
+          .feedback-container {
+              flex-direction: column;
+          }
+          .feedback-form {
+              position: static;
+              width: auto; /* Resets width to flow naturally */
+          }
+           .form-column {
+              min-width: unset; /* Unset min-width for mobile */
+           }
+      }
+  </style>
+</head>
+<body>
+  {% include 'navbar.html' %}
+
+  <div class="content">
+    <div style="text-align: center;">
+        <h1>شاركنا تجربتك</h1>
+        <p style="max-width: 700px; margin: 0 auto;">نحن نقدر آراءكم الصادقة. تصفح آراء الزوار الآخرين وأضف رأيك!</p>
+    </div>
+
+    <div class="feedback-container">
+
+        <div class="form-column">
+            <div class="feedback-form">
+                <h2 class="column-title">أضف رأيك</h2>
+                <form action="{{ url_for('submit_feedback') }}" method="post" enctype="multipart/form-data">
+                    <div class="form-group">
+                        <label for="visitorName">الاسم:</label>
+                        <input type="text" id="visitorName" name="visitorName" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="visitorEmail">البريد الإلكتروني (اختياري):</label>
+                        <input type="email" id="visitorEmail" name="visitorEmail">
+                    </div>
+                    <div class="form-group">
+                        <label for="visitorOpinion">رأيك:</label>
+                        <textarea id="visitorOpinion" name="visitorOpinion" rows="5" required></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="visitorMedia">رفع صورة أو فيديو (اختياري):</label>
+                        <input type="file" id="visitorMedia" name="visitorMedia" accept="image/*,video/*">
+                    </div>
+                    <button type="submit" class="btn">إرسال الرأي</button>
+                </form>
+            </div>
+        </div>
+
+        <div class="feedback-list-column">
+            <h2 class="column-title">آراء زوارنا</h2>
+            
+            {% if feedbacks %}
+                {% for item in feedbacks %}
+                <div class="feedback-item">
+                    <div class="feedback-item-header">
+                        <i class="fas fa-user-circle icon"></i>
+                        <h3>{{ item.name }}</h3>
+                    </div>
+                    <p>{{ item.opinion }}</p>
+
+                    {% if item.media_path %}
+                        {% if item.media_type == 'image' %}
+                        <img src="{{ url_for('static', filename=item.media_path) }}" alt="صورة مرفقة" class="media-preview">
+                        {% elif item.media_type == 'video' %}
+                        <video controls class="media-preview">
+                            <source src="{{ url_for('static', filename=item.media_path) }}" type="video/mp4">
+                            متصفحك لا يدعم تشغيل الفيديو
+                        </video>
+                        {% endif %}
+                    {% endif %}
+                    <small>بتاريخ: {{ item.submitted_at.strftime('%Y-%m-%d') }}</small>
+                </div>
+                {% endfor %}
+            {% else %}
+                <div class="no-feedback-card">
+                    <div class="icon"><i class="fas fa-comments"></i></div>
+                    <p>لا توجد آراء مضافة بعد. كن أول من يشاركنا تجربته الرائعة!</p>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+  </div>
+</body>
+</html>

@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <title>فضاء المستخدم - Espace Telmoudi</title>
+    
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/theme.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    
+    <style>
+        /* Make the main content area wider to match the screenshot */
+        .content {
+            max-width: 1140px;
+        }
+
+        /* Style for the main page title */
+        .page-title {
+            text-align: center;
+            font-size: 2.8rem;
+            margin-bottom: 30px;
+        }
+
+        /* Refined welcome banner styling */
+        .welcome-section {
+            background-color: #e8e4db;
+            border-radius: 12px; /* Softer corners */
+            padding: 40px;
+            margin: 30px 0 50px 0; /* Increased bottom margin */
+            text-align: center;
+        }
+
+        .welcome-section h2 {
+            margin-top: 0;
+            font-size: 2.2rem;
+            margin-bottom: 15px;
+        }
+        .welcome-section p {
+            font-size: 1.1rem;
+            color: var(--text-charcoal);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* Grid layout for the feature cards */
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        /* Refined feature card styling */
+        .feature-card {
+            background-color: var(--card-white);
+            border-radius: 12px;
+            padding: 30px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08); /* Softer shadow */
+            text-align: center;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.12);
+        }
+
+        /* Stack the icon and title vertically */
+        .feature-card h3 {
+            margin-top: 0;
+            margin-bottom: 15px;
+            display: flex;
+            flex-direction: column; /* Stack icon on top of text */
+            align-items: center;
+            gap: 15px; /* Space between icon and text */
+            font-size: 1.5rem;
+        }
+        
+        .feature-card .icon {
+            font-size: 2rem; /* Larger icon */
+            color: var(--accent-terracotta);
+            line-height: 1;
+        }
+
+        .feature-card p {
+            margin-bottom: 20px;
+            min-height: 50px; /* Ensures cards have similar height */
+        }
+        
+    </style>
+</head>
+<body>
+    {% include 'navbar.html' %}
+    
+    <div class="content">
+        <h1 class="page-title">فضائك الشخصي</h1>
+        
+        <div class="welcome-section">
+            <h2>مرحباً بك، {{ user_name }}!</h2>
+            <p>هنا يمكنك إدارة حسابك، متابعة حجوزاتك، والوصول إلى الميزات الخاصة بك بكل سهولة.</p>
+        </div>
+        
+        <div class="features-grid">            
+            <div class="feature-card">
+                <h3>
+                    <i class="fas fa-comments icon"></i>
+                    <span>آرائك السابقة</span>
+                </h3>
+                <p>شاهد جميع الآراء التي شاركتها معنا، وقم بتعديلها أو حذفها.</p>
+                <a href="{{ url_for('my_feedback') }}" class="btn">عرض الآراء</a>
+            </div>
+            
+            <div class="feature-card">
+                <h3>
+                    <i class="fas fa-calendar-alt icon"></i>
+                    <span>المواعيد والحجوزات</span>
+                </h3>
+                <p>احجز موعداً لزيارتك القادمة أو اطلع على حجوزاتك المؤكدة.</p>
+                <a href="{{ url_for('book_appointment') }}" class="btn">حجز موعد</a>
+            </div>
+            
+            <div class="feature-card">
+                <h3>
+                    <i class="fas fa-user-cog icon"></i>
+                    <span>إعدادات الحساب</span>
+                </h3>
+                <p>قم بتحديث معلومات ملفك الشخصي وتفضيلاتك بكل سهولة.</p>
+                <a href="{{ url_for('account_settings') }}" class="btn">تعديل الملف الشخصي</a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

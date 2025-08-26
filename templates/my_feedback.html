@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <title>آرائي السابقة - Espace Telmoudi</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/theme.css') }}">
+</head>
+<body>
+    {% include 'navbar.html' %}
+    <div class="content" style="max-width: 800px;">
+        <h1 style="text-align: center;">آرائي السابقة</h1>
+        
+        {% if feedbacks %}
+            {% for item in feedbacks %}
+            <div class="feedback-item" style="border-right: 4px solid var(--primary-green);">
+                <p>{{ item.opinion }}</p>
+                {% if item.media_path %}
+                    {% if item.media_type == 'image' %}
+                    <img src="{{ url_for('static', filename=item.media_path) }}" alt="صورة مرفقة" class="media-preview" style="max-width: 100%; height: auto; border-radius: 8px; margin-top: 15px;">
+                    {% elif item.media_type == 'video' %}
+                    <video controls class="media-preview" style="max-width: 100%; height: auto; border-radius: 8px; margin-top: 15px;">
+                        <source src="{{ url_for('static', filename=item.media_path) }}" type="video/mp4">
+                        متصفحك لا يدعم تشغيل الفيديو
+                    </video>
+                    {% endif %}
+                {% endif %}
+                <small style="color: #777; display: block; margin-top: 15px;">بتاريخ: {{ item.submitted_at.strftime('%Y-%m-%d') }}</small>
+            </div>
+            {% endfor %}
+        {% else %}
+            <p style="text-align: center;">لم تقم بإضافة أي آراء حتى الآن.</p>
+        {% endif %}
+    </div>
+</body>
+</html>

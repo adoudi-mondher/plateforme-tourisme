@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <title>حجوزاتي - Espace Telmoudi</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/theme.css') }}">
+    <style>
+        .appointments-list {
+            max-width: 800px;
+            margin: 40px auto;
+        }
+        .appointment-item {
+            background-color: var(--card-white);
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: var(--shadow);
+            margin-bottom: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .alert-success {
+            background-color: #d4edda;
+            color: #155724;
+            padding: 10px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        /* --- NEW: Style for the cancel button --- */
+        .btn-cancel {
+            background-color: #dc3545; /* A standard red for delete actions */
+            padding: 5px 15px;
+            font-size: 14px;
+            margin-left: 20px;
+        }
+        .btn-cancel:hover {
+            background-color: #c82333;
+        }
+    </style>
+</head>
+<body>
+    {% include 'navbar.html' %}
+    <div class="content">
+        <h1 style="text-align: center;">قائمة حجوزاتي</h1>
+
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                    {% if category == 'success' %}
+                        <div class="alert-success">{{ message }}</div>
+                    {% endif %}
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+
+        <div class="appointments-list">
+            {% if appointments %}
+                {% for appt in appointments %}
+                <div class="appointment-item">
+                    <div>
+                        <h3>{{ appt.service_name }}</h3>
+                        <p>تاريخ الموعد: {{ appt.appointment_date.strftime('%Y-%m-%d') }}</p>
+                    </div>
+                    <div style="display: flex; align-items: center;">
+                        <span style="background-color:#004d40; color:white; padding: 5px 15px; border-radius: 20px;">{{ appt.status }}</span>
+                        <form method="POST" action="{{ url_for('cancel_appointment', appointment_id=appt.id) }}" onsubmit="return confirm('هل أنت متأكد من رغبتك في إلغاء هذا الموعد؟');">
+                            <button type="submit" class="btn btn-cancel">إلغاء</button>
+                        </form>
+                    </div>
+                </div>
+                {% endfor %}
+            {% else %}
+                <p style="text-align: center;">ليس لديك أي حجوزات حتى الآن.</p>
+                <div style="text-align: center;">
+                    <a href="{{ url_for('book_appointment') }}" class="btn">احجز موعداً جديداً</a>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+</body>
+</html>
